@@ -9,7 +9,7 @@ from thebot import dankbot
 from datetime import datetime
 from pyrogram import errors, __version__
 from pyrogram.errors import PeerIdInvalid
-from thebot.modules.nhentai import nhentai, nhentai_data
+from th
 from thebot.modules.anilist import url, anime_query, manga_query, shorten, airing_query, character_query
 from pyrogram.types import (
     InlineKeyboardButton,
@@ -32,7 +32,7 @@ async def inline_query_handler(client, query):
             results=[
                 InlineQueryResultPhoto(
                     caption="Heyya, Try me in Inline by Pressing these buttons below",
-                    photo_url="https://telegra.ph/file/ed938a282abcd7a87a033.jpg",
+                    photo_url="https://telegra.ph/file/1d8bdb0653a521fa8aa6f.jpg",
                     parse_mode="markdown",
                     title=f"Need Help?",
                     description=f"Click Here..",
@@ -40,7 +40,6 @@ async def inline_query_handler(client, query):
                         [[
                         InlineKeyboardButton("Anime", switch_inline_query_current_chat="anime "),
                         InlineKeyboardButton("Manga", switch_inline_query_current_chat="manga "),
-                        InlineKeyboardButton("nHentai", switch_inline_query_current_chat="nhentai ")
                         ],
                         [
                         InlineKeyboardButton("Airing", switch_inline_query_current_chat="airing "),
@@ -57,39 +56,7 @@ async def inline_query_handler(client, query):
             cache_time=300
         )
 
-    answers = []
-    if string.split()[0] == "nhentai":
-        if len(string.split()) == 1:
-            await client.answer_inline_query(query.id,
-                                            results=answers,
-                                            switch_pm_text="Enter nHentai ID",
-                                            switch_pm_parameter="start"
-                                            )
-            return
-        squery = string.split(None, 1)[1]
-        n_title, tags, artist, total_pages, post_url, cover_image = nhentai_data(squery)
-        reply_message = f"<code>{n_title}</code>\n\n<b>Tags:</b>\n{tags}\n<b>Artists:</b>\n{artist}\n<b>Pages:</b>\n{total_pages}"
-        await client.answer_inline_query(query.id,
-            results=[
-                InlineQueryResultArticle(
-                        title=n_title,
-                        input_message_content=InputTextMessageContent(
-                            reply_message
-                        ),
-                        description=tags,
-                        thumb_url=cover_image,
-                        reply_markup=InlineKeyboardMarkup(
-                            [[
-                            InlineKeyboardButton(
-                                "Read Here",
-                                url=post_url
-                                )
-                            ]]
-                        )
-                    )
-            ],
-            cache_time=1
-        )
+    
 
     elif string.split()[0] == "anime":
         if len(string.split()) == 1:
