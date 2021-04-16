@@ -2,6 +2,7 @@ import logging
 import time
 from telegraph import Telegraph
 from pyrogram import Client, errors
+from thebot.config import Config
 StartTime = time.time()
 logging.basicConfig(level=logging.INFO)
 
